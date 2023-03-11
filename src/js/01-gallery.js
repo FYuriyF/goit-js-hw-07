@@ -29,6 +29,7 @@ function createGalleryCardsMarkup(galleryItems) {
 }
 
 function onGalleryElement(evt) {
+	evt.preventDefault();
 	if (!evt.target.classList.contains("gallery__image")) {
 		return;
 	}
@@ -36,6 +37,13 @@ function onGalleryElement(evt) {
     <img src="${evt.target.dataset.source}" alt ="${evt.target.alt}" >`);
 
 	modalElement.show();
+
+	document.addEventListener("keydown", (event) => {
+		if (event.key === "Escape") {
+			modalElement.close();
+		}
+	});
+
 	console.log(evt.target);
 }
 // console.log(galleryItems);
