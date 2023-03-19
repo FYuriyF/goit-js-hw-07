@@ -33,17 +33,24 @@ function onGalleryElement(evt) {
 	if (!evt.target.classList.contains("gallery__image")) {
 		return;
 	}
-	const modalElement = basicLightbox.create(`
-    <img src="${evt.target.dataset.source}" alt ="${evt.target.alt}" >`);
+	const modalElement = basicLightbox.create(
+		`
+    <img src="${evt.target.dataset.source}" alt ="${evt.target.alt}" >`,
+		{
+			onShow: (modalElement) => {
+				document.addEventListener("keydown", escModal);
+			},
+			onClose: (modalElement) => {
+				document.removeEventListener("keydown", escModal);
+			},
+		}
+	);
 
 	modalElement.show();
 
-	document.addEventListener("keydown", (event) => {
+	function escModal(event) {
 		if (event.key === "Escape") {
 			modalElement.close();
 		}
-	});
-
-	console.log(evt.target);
+	}
 }
-// console.log(galleryItems);
